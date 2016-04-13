@@ -1,0 +1,21 @@
+{
+  "name": "voteapp",
+  "description": "voting app",
+  "main": "app.js",
+  "authors": [
+    "kokoc"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/KokoChris/VoteApp",
+  "moduleType": [],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "^3.3.6"
+  }
+}

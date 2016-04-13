@@ -1,0 +1,31 @@
+{
+  "name": "voteapp",
+  "version": "1.0.0",
+  "description": "voting app",
+  "main": "app.js",
+  "scripts": {
+    "test": "mocha test.js",
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KokoChris/VoteApp.git"
+  },
+  "author": "kokoc",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/KokoChris/VoteApp/issues"
+  },
+  "homepage": "https://github.com/KokoChris/VoteApp#readme",
+  "dependencies": {
+    "body-parser": "^1.15.0",
+    "ejs": "^2.4.1",
+    "express": "^4.13.4",
+    "mongoose": "^4.4.12",
+    "passport": "^0.3.2"
+  },
+  "devDependencies": {
+    "mocha": "^2.4.5",
+    "supertest": "^1.2.0"
+  }
+}
