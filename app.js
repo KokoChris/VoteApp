@@ -13,8 +13,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 
 app.get('/', function(req, res) {
-    res.render('partials/header')
-})
+    res.render('partials/header');
+});
 
 
 

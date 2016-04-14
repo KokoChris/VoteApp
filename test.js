@@ -8,5 +8,5 @@ describe('Request to root path',function () {
 		request(app)
 			.get('/')
 			.expect(200,done);
-	})
-})
+	});
+});
