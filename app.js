@@ -13,7 +13,20 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 
 app.get('/', function(req, res) {
-    res.render('partials/header');
+    res.status(200).send('welcome to the app');
+});
+
+app.get('/polls', function(req, res) {
+    res.render('polls/index');
+});
+
+app.get('/polls/new', function(req, res) {
+    res.render('polls/new');
+});
+
+app.post('/polls',function(req,res) {
+	console.log(req.body)
+	res.sendStatus(201);
 });
 
 
