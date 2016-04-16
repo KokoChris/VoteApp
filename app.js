@@ -4,8 +4,6 @@ var express = require('express'),
     mongoose = require('mongoose'),
     port = process.env.PORT || 3000;
 
-
-
 app.set('view engine', 'ejs');
 
 app.use(express.static(__dirname + '/public'));
@@ -24,9 +22,9 @@ app.get('/polls/new', function(req, res) {
     res.render('polls/new');
 });
 
-app.post('/polls',function(req,res) {
-	console.log(req.body)
-	res.sendStatus(201);
+app.post('/polls', function(req, res) {
+    console.log(req.body);
+    res.sendStatus(201);
 });
 
 
