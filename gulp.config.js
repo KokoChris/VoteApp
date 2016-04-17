@@ -3,7 +3,8 @@ module.exports = function() {
         alljs: [
             './*.js',
             './public/customjs/*.js',
-            './models/*.js'
+            './models/*.js',
+            './routes/*.js'
         ]
     };
     return config;

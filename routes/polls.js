@@ -1,6 +1,6 @@
 var express = require('express'),
-	router 	= express.Router(),
-	Poll 	= require('../models/poll');
+    router = express.Router(),
+    Poll = require('../models/poll');
 
 router.get('/', function(req, res) {
 
@@ -15,6 +15,13 @@ router.get('/', function(req, res) {
 router.get('/new', function(req, res) {
     res.render('polls/new');
 });
+
+router.get('/:id', function(req, res) {
+    var pollId = req.params.id;
+    Poll.findById(pollId, function(err, poll) {
+        res.render('polls/show', { poll: poll })
+    })
+})
 router.post('/', function(req, res) {
 
     var pollName = req.body.name;

@@ -3,61 +3,22 @@ var express = require('express'),
     bodyParser = require('body-parser'),
     mongoose = require('mongoose'),
     port = process.env.PORT || 3000,
-    Poll = require('./models/poll');
+    Poll = require('./models/poll'),
+    pollRoutes = require('./routes/polls');
 
 app.set('view engine', 'ejs');
 
 app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use('/polls', pollRoutes);
 
 mongoose.connect("mongodb://localhost/voteapp");
 
 
 app.get('/', function(req, res) {
-
     res.status(200).send('welcome to the app');
 });
 
-app.get('/polls', function(req, res) {
-
-    Poll.find({}, function(err, allPolls) {
-        if (err) {
-            console.log(err);
-        } else {
-            res.render('polls/index', { polls: allPolls })
-        }
-    });
-});
-
-app.get('/polls/new', function(req, res) {
-    res.render('polls/new');
-});
-
-app.post('/polls', function(req, res) {
-
-    var pollName = req.body.name;
-    var formOptions = req.body.option;
-
-    var options = [];
-    formOptions.forEach(function(opt) {
-        options.push({
-            name: opt,
-            count: 0
-        });
-    });
-    newPoll = {
-        name: pollName,
-        options: options
-    };
-    Poll.create(newPoll, function(err, justCreated) {
-        if (err) {
-            console.log(err);
-
-        } else {
-            res.redirect('/');
-        }
-    });
-});
 
 
 
