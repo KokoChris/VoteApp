@@ -14,12 +14,19 @@ mongoose.connect("mongodb://localhost/voteapp");
 
 
 app.get('/', function(req, res) {
+
     res.status(200).send('welcome to the app');
 });
 
 app.get('/polls', function(req, res) {
-	var polls = [{name : 'koko'}];
-    res.render('polls/index',{polls: polls});
+
+    Poll.find({}, function(err, allPolls) {
+        if (err) {
+            console.log(err);
+        } else {
+            res.render('polls/index', { polls: allPolls })
+        }
+    });
 });
 
 app.get('/polls/new', function(req, res) {
