@@ -21,10 +21,12 @@ describe('Request to new poll path', function() {
 });
 
 
-describe('Creating new poll',function() {
-	it('Returns a 201 status code',function(done) {
-		request(app)
-		 	.post('/polls')
-		 	.expect(201,done);
-	});
+describe('Creating new poll', function() {
+    it('Redirects to root', function(done) {
+        request(app)
+            .post('/polls')
+            .send('name=koko&option=option1&option=option2')
+            .expect(302, done);
+    });
+
 });
