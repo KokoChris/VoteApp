@@ -43,7 +43,7 @@ router.post('/', function(req, res) {
             console.log(err);
 
         } else {
-            res.redirect('/');
+            res.redirect('/polls');
         }
     });
 });
