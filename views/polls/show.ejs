@@ -1,29 +1,20 @@
 <% include ../partials/header %>
 
-<%= poll %>
+
 
 <div class="container">
-	<h1 style="text-align:center;">Create a New Poll</h1>
+	<h1 style="text-align:center;"><%=poll.name%></h1>
 	<div class="row">
-		<div style="width:30%; margin:35px auto;">
-		 	<button class="btn btn-sm btn-warning">Add Another Option</button></b>
-			<form action="/polls" method="POST"> 
-				<div class="form-group">
-					<input class="form-control" type="text" name="name"  placeholder="poll name"></input>
-				</div>
-				<div class="form-group">
-					<input class="form-control" type="text" name="option" placeholder="poll option"></input>
-				</div>
-				<div class="form-group">
-					<input class="form-control" type="text" name="option" placeholder="poll option"></input>
-				</div>		
-				<div class="form-group">
-					<button class="btn btn-lg btn-primary btn-block">Submit</button>
-				</div>					
-			</form>
+		<div class="col-sm-6 col-sm-offset-3"
+			  <ul class="list-group">
+			  <% poll["options"].forEach(function(option){ %>
+			  		<li class="list-group-item"><span class="badge"><%= option.count%></span><%= option.name%></li>
+			  <%})%>
+			    
+				<a href="/polls">Go Back</a>
 
-			<a href="/polls">Go Back</a>
-		</div>
+		</div>	
+		
 	
 	</div>
 </div>
