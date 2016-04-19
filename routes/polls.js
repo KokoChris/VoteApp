@@ -50,14 +50,12 @@ router.post('/', function(req, res) {
     });
 });
 
-<<<<<<< HEAD
+
 router.get('/:id/edit', function(req, res) {
     res.send("edit page");
 });
 
-router.put('/:id', function(req, res) {
-    res.send("update");
-=======
+
 
 router.get('/:id/edit', function(req, res) {
     var pollId = req.params.id;
@@ -83,7 +81,6 @@ router.put('/:id', function(req, res) {
 
         });
     });
->>>>>>> addeditpage
 });
 
 
