@@ -8,4 +8,6 @@ $(document).ready(function() {
     $('.form-group').on('click', '.fa-trash', function() {
         $(this).closest('.form-group').remove();
     });
+
+    
 });

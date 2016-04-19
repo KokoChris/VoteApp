@@ -48,6 +48,13 @@ router.post('/', function(req, res) {
     });
 });
 
+router.get('/:id/edit', function(req,res){
+    res.send("edit page")
+});
+
+router.put('/:id', function(req,res){
+    res.send("update")
+})
 
 
 module.exports = router;
