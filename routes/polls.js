@@ -51,11 +51,6 @@ router.post('/', function(req, res) {
 });
 
 
-router.get('/:id/edit', function(req, res) {
-    res.send("edit page");
-});
-
-
 
 router.get('/:id/edit', function(req, res) {
     var pollId = req.params.id;
@@ -69,7 +64,7 @@ router.put('/:id', function(req, res) {
     console.log(req.body.optionsRadios);
     Poll.findById(pollId, function(err, poll) {
         poll.options.forEach(function(opt) {
-           
+
             if (opt.name === req.body.optionsRadios) {
                 opt.count += 1;
             }
