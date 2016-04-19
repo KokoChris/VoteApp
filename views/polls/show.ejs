@@ -1,24 +1,35 @@
 <% include ../partials/header %>
 
 
-
 <div class="container">
 	<h1 style="text-align:center;"><%=poll.name%></h1>
 	<div class="row">
-		<div class="col-sm-6 col-sm-offset-3"
+		<div class="col-sm-6 col-sm-offset-3">
 			  <ul class="list-group">
 			  <% poll["options"].forEach(function(option){ %>
 			  		<li class="list-group-item"><span class="badge"><%= option.count%></span><%= option.name%></li>
 			  <%})%>
 			    
 				<a href="/polls">Go Back</a>
-
 		</div>	
-		
-	
+	</div>
+	<div class="row">
+		<div class="col-sm-6 col-sm-offset-3">
+			  <div id="chart_div"></div>
+		</div>	  
 	</div>
 </div>
 
+<!--Div that will hold the pie chart-->
+    <div id="chart_div"></div>
+
+<% if (poll) { %>
+     <h2>I have a game state!</h2>
+     <script>
+         var pollName = <%- JSON.stringify(poll.name) %>
+         var pollOptions = <%- JSON.stringify(poll.options)  %>  
+     </script>
+<% } %>
 
 
 <% include ../partials/footer %>
