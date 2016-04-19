@@ -2,6 +2,8 @@ var express = require('express'),
     router = express.Router(),
     Poll = require('../models/poll');
 
+
+
 router.get('/', function(req, res) {
 
     Poll.find({}, function(err, allPolls) {
@@ -19,9 +21,9 @@ router.get('/new', function(req, res) {
 router.get('/:id', function(req, res) {
     var pollId = req.params.id;
     Poll.findById(pollId, function(err, poll) {
-        res.render('polls/show', { poll: poll })
-    })
-})
+        res.render('polls/show', { poll: poll });
+    });
+});
 router.post('/', function(req, res) {
 
     var pollName = req.body.name;
@@ -48,13 +50,32 @@ router.post('/', function(req, res) {
     });
 });
 
-router.get('/:id/edit', function(req,res){
-    res.send("edit page")
+
+router.get('/:id/edit', function(req, res) {
+    var pollId = req.params.id;
+    Poll.findById(pollId, function(err, poll) {
+        res.render('polls/edit', { poll: poll });
+    });
 });
 
-router.put('/:id', function(req,res){
-    res.send("update")
-})
+router.put('/:id', function(req, res) {
+    var pollId = req.params.id;
+    console.log(req.body.optionsRadios);
+    Poll.findById(pollId, function(err, poll) {
+        poll.options.forEach(function(opt) {
+           
+            if (opt.name === req.body.optionsRadios) {
+                opt.count += 1;
+            }
+
+        });
+        poll.save(function(err) {
+            if (err) return handleError(err);
+            res.redirect("/polls/" + pollId);
+
+        });
+    });
+});
 
 
 module.exports = router;
