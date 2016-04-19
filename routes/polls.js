@@ -19,9 +19,9 @@ router.get('/new', function(req, res) {
 router.get('/:id', function(req, res) {
     var pollId = req.params.id;
     Poll.findById(pollId, function(err, poll) {
-        res.render('polls/show', { poll: poll })
-    })
-})
+        res.render('polls/show', { poll: poll });
+    });
+});
 router.post('/', function(req, res) {
 
     var pollName = req.body.name;
@@ -48,13 +48,13 @@ router.post('/', function(req, res) {
     });
 });
 
-router.get('/:id/edit', function(req,res){
-    res.send("edit page")
+router.get('/:id/edit', function(req, res) {
+    res.send("edit page");
 });
 
-router.put('/:id', function(req,res){
-    res.send("update")
-})
+router.put('/:id', function(req, res) {
+    res.send("update");
+});
 
 
 module.exports = router;

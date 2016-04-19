@@ -16,7 +16,7 @@ mongoose.connect("mongodb://localhost/voteapp");
 
 
 app.get('/', function(req, res) {
-    res.status(200).send('welcome to the app');
+    res.redirect('/polls');
 });
 
 
