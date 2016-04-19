@@ -23,9 +23,11 @@
           data.addRows(pOptions);
 
           // Set chart options
-          var options = { 'title': pollName,
+          var options = { 
                          'width':400,
-                         'height':350};
+                         'height':350,
+                         
+                         };
 
           // Instantiate and draw our chart, passing in some options.
           var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
