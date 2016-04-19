@@ -1,29 +1,37 @@
-     
-      google.charts.load('current', {'packages':['corechart']});
+        //create array of arrays from ejs passed object
+        var pOptions = [];
+        pollOptions.forEach(function(opt){
+          pOptions.push([opt.name,opt.count])
+          
+        });
 
-      // Set a callback to run when the Google Visualization API is loaded.
-      google.charts.setOnLoadCallback(drawChart);
+        google.charts.load('current', {'packages':['corechart']});
 
-      // Callback that creates and populates a data table,
-      // instantiates the pie chart, passes in the data and
-      // draws it.
-      function drawChart() {
+        // Set a callback to run when the Google Visualization API is loaded.
+        google.charts.setOnLoadCallback(drawChart);
 
-        // Create the data table.
-        var data = new google.visualization.DataTable();
-        data.addColumn('string', 'Topping');
-        data.addColumn('number', 'Slices');
-        data.addRows([
-          ['Basketball', 2],
-          ['Football', 1],
-        ]);
+        // Callback that creates and populates a data table,
+        // instantiates the pie chart, passes in the data and
+        // draws it.
+        function drawChart() {
+          var chartOptions = [];
+          // Create the data table.
+          var data = new google.visualization.DataTable();
+          data.addColumn('string', 'Topping');
+          data.addColumn('number', 'Slices');
+          
+          data.addRows(pOptions);
 
-        // Set chart options
-        var options = {
-                       'width':500,
-                       'height':350};
+          // Set chart options
+          var options = { 'title': pollName,
+                         'width':400,
+                         'height':350};
 
-        // Instantiate and draw our chart, passing in some options.
-        var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
-        chart.draw(data, options);
-      }
+          // Instantiate and draw our chart, passing in some options.
+          var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+          chart.draw(data, options);
+
+        }
+
+
+      
