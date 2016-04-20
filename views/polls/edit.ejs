@@ -13,7 +13,7 @@
                 <div class="panel-body">          
                     <form action="/polls/<%= poll._id%>?_method=PUT" method="POST"> 
                          <% poll['options'].forEach(function(opt){ %>
-                                <div class="radio koko">
+                                <div class="radio">
                                    <label>
                                       <input type = "radio" name= "optionsRadios" value ="<%= opt.name %>"> <%=opt.name %>
                                    </label>
@@ -39,7 +39,7 @@
                         <form>
                           <div class="form-group">
                         
-                            <input class="form-control" type="text" name="option" placeholder=""></input>
+                            <input class="form-control modalText" type="text" name="option" placeholder=""></input>
                           </div>
                         </form>
                       </div>
@@ -67,15 +67,16 @@
     $('.modal-footer').on('click','button',function(){
 
          var optionText = $('.form-control').val();
-         var newDivOption = '<div class="radio>"'+
+         var newDivOption = '<div class="radio">'+
                              '<label>'+
-                                      '<input type = "radio" name= "optionsRadios" value =' + optionText + '>'+ optionText
+                                      '<input type = "radio" name= "optionsRadios" value =' + optionText + ' checked>'+ optionText
                               +'</label>'+
                               '</div>';
        
           
 
-          // $('.btn-primary').closest('.form-group').prepend(optionHtml);
+          $('.votebtn').before(newDivOption);
+          $('.modalText').val("");
     
     });
 
