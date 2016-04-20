@@ -61,7 +61,6 @@ router.get('/:id/edit', function(req, res) {
 
 router.put('/:id', function(req, res) {
     var pollId = req.params.id;
-    console.log(req.body.optionsRadios);
     Poll.findById(pollId, function(err, poll) {
         poll.options.forEach(function(opt) {
 
