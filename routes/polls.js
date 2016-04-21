@@ -61,19 +61,34 @@ router.get('/:id/edit', function(req, res) {
 
 router.put('/:id', function(req, res) {
     var pollId = req.params.id;
+
     Poll.findById(pollId, function(err, poll) {
         poll.options.forEach(function(opt) {
 
             if (opt.name === req.body.optionsRadios) {
                 opt.count += 1;
+                poll.save(function(err) {
+                    if (err) return handleError(err);
+                    res.redirect("/polls/" + pollId);
+
+                });
             }
 
         });
-        poll.save(function(err) {
-            if (err) return handleError(err);
-            res.redirect("/polls/" + pollId);
 
-        });
+        var newPollOption = { name: req.body.optionsRadios, count: 1 };
+        
+        if (poll.options[newPollOption] === undefined) {
+            poll.options.push(newPollOption);
+            poll.save(function(err) {
+              
+                if (err) return handleError(err);
+                res.redirect("/polls/" + pollId);
+
+            });
+        }
+
+
     });
 });
 
