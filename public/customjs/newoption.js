@@ -1,5 +1,5 @@
 var optionHtml = '<div class="form-group">' +
-    '<input class="form-control" type="text" name="option" placeholder="poll option"></input>' + '<i class="fa fa-trash" aria-hidden="true"></i>' + '</div>';
+    '<input class="form-control" type="text" name="poll[options]" placeholder="poll option"></input>' + '<i class="fa fa-trash" aria-hidden="true"></i>' + '</div>';
 
  
 $(document).ready(function() {

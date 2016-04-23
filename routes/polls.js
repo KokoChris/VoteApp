@@ -26,8 +26,8 @@ router.get('/:id', function(req, res) {
 });
 router.post('/', function(req, res) {
 
-    var pollName = req.body.name;
-    var formOptions = req.body.option;
+    var pollName = req.body.poll.name;
+    var formOptions = req.body.poll.options;
 
     var options = [];
     formOptions.forEach(function(opt) {
@@ -104,10 +104,29 @@ router.delete("/:id", function(req, res) {
 function editOrVote(req, res, next) {
     if (req.body.poll) {
         Poll.findById(req.params.id, function(err, poll) {
+            poll.name = req.body.poll.name;
+            console.log(poll, req.body.poll)
+            var extraOptions = [];
 
-            for (var j = 0; j < poll.options.length; j++) {
-                poll.options[j].name = req.body.poll.options[j]
+
+            for (var j = 0; j < req.body.poll.options.length; j++) {
+                if (poll.options[j]) {
+                    poll.options[j].name = req.body.poll.options[j]
+                }
+                if (!poll.options[j]) {
+                    console.log("hey")
+                    extraOptions.push({
+                        name: req.body.poll.options[j],
+                        count: 0
+                    });
+                };
             }
+
+            for (var k = 0; k < extraOptions.length; k++) {
+                poll.options.push(extraOptions[k])
+            }
+
+
             poll.save(function(err) {
                 if (err) return handleError(err);
                 res.redirect("back")
