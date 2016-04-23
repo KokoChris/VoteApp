@@ -1,83 +1,37 @@
 <% include ../partials/header %>
 
-<div class="container">
-    <div class="row">
-        <div class="col-md-6 col-md-offset-3">
-            <div class="panel panel-primary">
-                <div class="panel-heading">
-                    <h3 class="panel-title">
-                        <span class="glyphicon glyphicon-arrow-right"></span><%= poll.name %>
-                        <a data-toggle="modal" href="#exampleModal"><span class="glyphicon glyphicon-plus pull-right" data-toggle="tooltip" data-original-title="Add new option"></span></a>
-                    </h3>
-                </div>
-                <div class="panel-body">          
-                    <form action="/polls/<%= poll._id%>?_method=PUT" method="POST"> 
-                         <% poll['options'].forEach(function(opt){ %>
-                                <div class="radio">
-                                   <label>
-                                      <input type = "radio" name= "optionsRadios" value ="<%= opt.name %>"> <%=opt.name %>
-                                   </label>
-                                </div>
-                        <% }); %>
 
-                       
-                        <button class="btn btn-lg btn-primary btn-block votebtn">Vote</button>
-                     </form>
-                  
-                </div>
-                
-               <a href="/polls/<%=poll._id%>">Go to results</a></div>
-                              
-              <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
-                  <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="exampleModalLabel">New Poll Option</h4>
-                      </div>
-                      <div class="modal-body">
-                        <form>
-                          <div class="form-group">
-                        
-                            <input class="form-control modalText" type="text" name="option" placeholder=""></input>
-                          </div>
-                        </form>
-                      </div>
-                      <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Add Option</button>
-                     
-                      </div>
-                    </div>
-                  </div>
-                </div>
-            </div>
+<div class="container">
+  <h1 style="text-align:center;"> <%= poll.name %> </h1>
+  <div class="row">
+    <div style="width:30%; margin:35px auto;">
+      <button class="btn btn-sm btn-warning">Add Another Option</button></b>
+      <form action="/polls/<%=poll._id%>?_method=PUT" method="POST"> 
+        <div class="form-group">
+          <input class="form-control" type="text" name="poll[name]"  value="<%=poll.name%>"></input>
         </div>
+        <% poll.options.forEach(function(opt){ %>
+          <div class="form-group">
+            <input class="form-control" type="text" name="poll[options]" value="<%=opt.name%>"></input>
+          </div>  
+        <% }) %>
+        
+          
+        <div class="form-group">
+          <button class="btn btn-lg btn-primary btn-block">Submit</button>
+        </div>          
+      </form>
+
+      <a href="/polls">Go Back</a>
     </div>
+  
+  </div>
 </div>
 
+
+
+
+
+
 <% include ../partials/footer %>
-<script type="text/javascript">
-  
-   
-    $('[data-toggle="tooltip"]').tooltip({
-        placement : 'bottom'
-    });
 
-
-    $('.modal-footer').on('click','button',function(){
-
-         var optionText = $('.form-control').val();
-         var newDivOption = '<div class="radio">'+
-                             '<label>'+
-                                      '<input type = "radio" name= "optionsRadios" value =' + optionText + ' checked>'+ optionText
-                              +'</label>'+
-                              '</div>';
-       
-          
-
-          $('.votebtn').before(newDivOption);
-          $('.modalText').val("");
-    
-    });
-
-</script>

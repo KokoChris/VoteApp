@@ -59,17 +59,18 @@ router.get('/:id/edit', function(req, res) {
     });
 });
 
-router.put('/:id', function(req, res) {
-    console.log(req.body)
+router.put('/:id', editOrVote, function(req, res) {
+
     var pollId = req.params.id;
+    
 
     Poll.findById(pollId, function(err, poll) {
-
+        var notNew;
         for (var i = 0; i < poll.options.length; i++) {
 
             if (poll.options[i]["name"] === req.body.optionsRadios) {
                 poll.options[i]["count"] += 1;
-                var notNew = true;
+                notNew = true;
                 poll.save(function(err) {
                     if (err) return handleError(err);
                     res.redirect("/polls/" + pollId);
@@ -77,29 +78,38 @@ router.put('/:id', function(req, res) {
             }
         }
         if (!notNew) {
-            var newPollOption = { name: req.body.optionsRadios, count: 1 }
+            var newPollOption = { name: req.body.optionsRadios, count: 1 };
             poll.options.push(newPollOption);
             poll.save(function(err) {
-                if (err) return handleError(err); {
-                    res.redirect("/polls/" + pollId)
-                }
-            })
+                if (err) return handleError(err);
+                res.redirect("/polls/" + pollId);
+
+            });
         }
 
     });
 });
 
 
+
+function editOrVote(req, res, next) {
+    if (req.body.poll) {
+        Poll.findById(req.params.id, function(err, poll) {
+
+            for (var j = 0; j < poll.options.length; j++) {
+                poll.options[j].name = req.body.poll.options[j]
+            }
+            poll.save(function(err) {
+                if (err) return handleError(err);
+
+
+                res.redirect("back")
+
+            })
+        });
+    }
+    if(req.body.optionsRadios){
+        next();
+    }
+}
 module.exports = router;
-
-// var newPollOptionName = { name: req.body.optionsRadios, count: 0 };
-// console.log(poll.options[newPollOption])
-// if (poll.options[newPollOption] === undefined) {
-//     poll.options.push(newPollOption);
-//     poll.save(function(err) {
-//          console.log('hey')
-//         if (err) return handleError(err);
-//         res.redirect("/polls/" + pollId);
-
-//     });
-// }
