@@ -22,7 +22,10 @@
         </div>          
       </form>
 
-      <a href="/polls">Go Back</a>
+      <a class="btn btn-xs btn-success"href="#">Go Back</a>
+      <form id="delete-form" action="/polls/<%= poll._id %>?_method=DELETE" method="POST">
+              <input  type="submit" class="btn btn-xs btn-danger" value="Delete">
+      </form>
     </div>
   
   </div>

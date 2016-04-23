@@ -62,7 +62,6 @@ router.get('/:id/edit', function(req, res) {
 router.put('/:id', editOrVote, function(req, res) {
 
     var pollId = req.params.id;
-    
 
     Poll.findById(pollId, function(err, poll) {
         var notNew;
@@ -91,6 +90,16 @@ router.put('/:id', editOrVote, function(req, res) {
 });
 
 
+router.delete("/:id", function(req, res) {
+    Poll.findByIdAndRemove(req.params.id, function(err) {
+        if (err) {
+            console.log(err);
+        } else {
+            res.redirect("/polls");
+        }
+    });
+
+})
 
 function editOrVote(req, res, next) {
     if (req.body.poll) {
@@ -101,14 +110,12 @@ function editOrVote(req, res, next) {
             }
             poll.save(function(err) {
                 if (err) return handleError(err);
-
-
                 res.redirect("back")
 
             })
         });
     }
-    if(req.body.optionsRadios){
+    if (req.body.optionsRadios) {
         next();
     }
 }
