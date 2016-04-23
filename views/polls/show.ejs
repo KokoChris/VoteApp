@@ -5,21 +5,90 @@
 		<h1 style="text-align:center;"><%=poll.name%></h1>
 		<div class="col-sm-12 col-sm-offset-4">
 			  <div id="chart_div"></div>
-			  <a href="/polls">Go Back</a>
-			  <a href="/polls/<%= poll._id %>/edit">Vote </a>
 		</div>	  
+		<div class="col-sm-6 col-sm-offset-3">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        <span class="glyphicon glyphicon-arrow-right"></span>Cast Your Vote
+                        <a data-toggle="modal" href="#exampleModal"><span class="glyphicon glyphicon-plus pull-right" data-toggle="tooltip" data-original-title="Add new option"></span></a>
+                    </h3>
+                </div>
+                <div class="panel-body">          
+                    <form action="/polls/<%= poll._id%>?_method=PUT" method="POST"> 
+                         <% poll['options'].forEach(function(opt){ %>
+                                <div class="radio">
+                                   <label>
+                                      <input type = "radio" name= "optionsRadios" value ="<%= opt.name %>"> <%=opt.name %>
+                                   </label>
+                                </div>
+                        <% }); %>
+
+                       
+                        <button class="btn btn-lg btn-primary btn-block votebtn">Vote</button>
+                     </form>
+                </div>
+          </div>
+          <a href="/polls">Go Back</a>
 	</div>
 </div>
 
-<!--Div that will hold the pie chart-->
-    <div id="chart_div"></div>
+<!-- -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+                  <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                          <h4 class="modal-title" id="exampleModalLabel">New Poll Option</h4>
+                        </div>
+                        <div class="modal-body">
+                          <form>
+                            <div class="form-group">
+                          
+                              <input class="form-control modalText" type="text" name="option" placeholder=""></input>
+                            </div>
+                          </form>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-default" data-dismiss="modal">Add Option</button>
+                       
+                        </div>
+                    </div>
+                  </div>
+              </div>  
 
 <% if (poll) { %>
      <script>
          var pollName = <%- JSON.stringify(poll.name) %>
          var pollOptions = <%- JSON.stringify(poll.options)  %>  
+
      </script>
 <% } %>
 
 
 <% include ../partials/footer %>
+<script type="text/javascript">
+  
+   
+    $('[data-toggle="tooltip"]').tooltip({
+        placement : 'bottom'
+    });
+
+
+    $('.modal-footer').on('click','button',function(){
+
+         var optionText = $('.form-control').val();
+         var newDivOption = '<div class="radio">'+
+                             '<label>'+
+                                      '<input type = "radio" name= "optionsRadios" value =' + optionText + ' checked>'+ optionText
+                              +'</label>'+
+                              '</div>';
+       
+          
+
+          $('.votebtn').before(newDivOption);
+          $('.modalText').val("");
+    
+    });
+
+</script>

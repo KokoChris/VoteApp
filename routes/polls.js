@@ -68,6 +68,7 @@ router.put('/:id', function(req, res) {
             if (opt.name === req.body.optionsRadios) {
                 opt.count += 1;
                 poll.save(function(err) {
+
                     if (err) return handleError(err);
                     res.redirect("/polls/" + pollId);
 
@@ -76,17 +77,17 @@ router.put('/:id', function(req, res) {
 
         });
 
-        var newPollOption = { name: req.body.optionsRadios, count: 1 };
-        
-        if (poll.options[newPollOption] === undefined) {
-            poll.options.push(newPollOption);
-            poll.save(function(err) {
-              
-                if (err) return handleError(err);
-                res.redirect("/polls/" + pollId);
+        // var newPollOptionName = { name: req.body.optionsRadios, count: 0 };
+        // console.log(poll.options[newPollOption])
+        // if (poll.options[newPollOption] === undefined) {
+        //     poll.options.push(newPollOption);
+        //     poll.save(function(err) {
+        //          console.log('hey')
+        //         if (err) return handleError(err);
+        //         res.redirect("/polls/" + pollId);
 
-            });
-        }
+        //     });
+        // }
 
 
     });
