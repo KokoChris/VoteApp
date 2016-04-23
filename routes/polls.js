@@ -60,38 +60,46 @@ router.get('/:id/edit', function(req, res) {
 });
 
 router.put('/:id', function(req, res) {
+    console.log(req.body)
     var pollId = req.params.id;
 
     Poll.findById(pollId, function(err, poll) {
-        poll.options.forEach(function(opt) {
 
-            if (opt.name === req.body.optionsRadios) {
-                opt.count += 1;
+        for (var i = 0; i < poll.options.length; i++) {
+
+            if (poll.options[i]["name"] === req.body.optionsRadios) {
+                poll.options[i]["count"] += 1;
+                var notNew = true;
                 poll.save(function(err) {
-
                     if (err) return handleError(err);
                     res.redirect("/polls/" + pollId);
-
                 });
             }
-
-        });
-
-        // var newPollOptionName = { name: req.body.optionsRadios, count: 0 };
-        // console.log(poll.options[newPollOption])
-        // if (poll.options[newPollOption] === undefined) {
-        //     poll.options.push(newPollOption);
-        //     poll.save(function(err) {
-        //          console.log('hey')
-        //         if (err) return handleError(err);
-        //         res.redirect("/polls/" + pollId);
-
-        //     });
-        // }
-
+        }
+        if (!notNew) {
+            var newPollOption = { name: req.body.optionsRadios, count: 1 }
+            poll.options.push(newPollOption);
+            poll.save(function(err) {
+                if (err) return handleError(err); {
+                    res.redirect("/polls/" + pollId)
+                }
+            })
+        }
 
     });
 });
 
 
 module.exports = router;
+
+// var newPollOptionName = { name: req.body.optionsRadios, count: 0 };
+// console.log(poll.options[newPollOption])
+// if (poll.options[newPollOption] === undefined) {
+//     poll.options.push(newPollOption);
+//     poll.save(function(err) {
+//          console.log('hey')
+//         if (err) return handleError(err);
+//         res.redirect("/polls/" + pollId);
+
+//     });
+// }
