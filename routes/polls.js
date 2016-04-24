@@ -1,12 +1,12 @@
 var express = require('express'),
     router = express.Router(),
-    Poll = require('../models/poll');
+    Poll = require('../models/poll')
 
 
 
-router.get('/', function(req, res) {
+router.get('/', isLoggedIn, function(req, res) {
 
-    Poll.find({}, function(err, allPolls) {
+    Poll.find({'owner.id': req.user._id}, function(err, allPolls) {
         if (err) {
             console.log(err);
         } else {
@@ -14,7 +14,7 @@ router.get('/', function(req, res) {
         }
     });
 });
-router.get('/new', function(req, res) {
+router.get('/new', isLoggedIn, function(req, res) {
     res.render('polls/new');
 });
 
@@ -24,10 +24,16 @@ router.get('/:id', function(req, res) {
         res.render('polls/show', { poll: poll });
     });
 });
-router.post('/', function(req, res) {
+router.post('/', isLoggedIn, function(req, res) {
 
     var pollName = req.body.poll.name;
     var formOptions = req.body.poll.options;
+    console.log(req.user)
+    var owner = {
+        id: req.user._id,
+        username: req.user.username
+    };
+    console.log(owner)
 
     var options = [];
     formOptions.forEach(function(opt) {
@@ -38,13 +44,15 @@ router.post('/', function(req, res) {
     });
     newPoll = {
         name: pollName,
-        options: options
+        options: options,
+        owner: owner
     };
     Poll.create(newPoll, function(err, justCreated) {
         if (err) {
             console.log(err);
 
         } else {
+            console.log(justCreated);
             res.redirect('/polls');
         }
     });
@@ -138,4 +146,13 @@ function editOrVote(req, res, next) {
         next();
     }
 }
+
+
+function isLoggedIn(req, res, next) {
+    if (req.isAuthenticated()) {
+        return next();
+    }
+    res.redirect("/login");
+}
+
 module.exports = router;
