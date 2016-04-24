@@ -12,7 +12,9 @@
                 <div class="panel-heading">
                     <h3 class="panel-title">
                         <span class="glyphicon glyphicon-arrow-right"></span>Cast Your Vote
-                        <a data-toggle="modal" href="#exampleModal"><span class="glyphicon glyphicon-plus pull-right" data-toggle="tooltip" data-original-title="Add new option"></span></a>
+                        <% if (currentUser) { %>
+                            <a data-toggle="modal" href="#exampleModal"><span class="glyphicon glyphicon-plus pull-right" data-toggle="tooltip" data-original-title="Add new option"></span></a>
+                        <% }%>
                     </h3>
                 </div>
                 <div class="panel-body">          
@@ -30,7 +32,19 @@
                      </form>
                 </div>
           </div>
-          <a href="/polls">Go Back</a>
+          <% if (currentUser ) { %>
+            <a href="/polls">My polls</a>
+          
+          <% } %>
+          
+          <% if (currentUser && poll.owner.id.equals(currentUser._id)) { %>
+            <a href="/polls/<%= poll.id%>/edit"> Edit Poll </a>
+            
+          <% } %>
+          <% if (!currentUser) {%>
+            <a href="/">More Polls</a>
+
+          <%  } %>
 	</div>
 </div>
 
