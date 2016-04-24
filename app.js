@@ -39,7 +39,8 @@ app.use(methodOverride("_method"));
 app.use('/polls', pollRoutes);
 app.use(indexRoutes);
 
-mongoose.connect("mongodb://localhost/voteapp");
+//mongoose.connect("mongodb://localhost/voteapp");
+mongoose.connect("mongodb://test:test123@ds013250.mlab.com:13250/vtapp");
 
 app.get('/', function(req, res) {
      Poll.find({}, function(err, allPolls) {

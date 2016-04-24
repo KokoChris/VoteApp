@@ -110,6 +110,7 @@ router.delete("/:id", function(req, res) {
 })
 
 function editOrVote(req, res, next) {
+    var pollId = req.params.id;
     if (req.body.poll) {
         Poll.findById(req.params.id, function(err, poll) {
             poll.name = req.body.poll.name;
@@ -137,7 +138,7 @@ function editOrVote(req, res, next) {
 
             poll.save(function(err) {
                 if (err) return handleError(err);
-                res.redirect("back")
+                res.redirect("/polls/" + pollId)
 
             })
         });
